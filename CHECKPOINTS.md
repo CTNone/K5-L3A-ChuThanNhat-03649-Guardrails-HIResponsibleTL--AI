@@ -1,8 +1,8 @@
-﻿# Lộ trình Checkpoints — Day 11 Guardrails / HITL / Red Team
+# Lộ trình Checkpoints — Day 11 Guardrails / HITL / Red Team
 
-> ⏱️ **Tổng:** Setup 30' + Lab ~130' (phòng thủ ~90' · tấn công ~30' · nộp ~10').  
-> 👤 **Cá nhân** · Làm **đúng thứ tự** Checkpoint 1 → 5.  
-> 📂 **Không tự tạo file JSON trong** `outputs/` **bằng tay.** Folder và file kết quả được **sinh khi bạn chạy lệnh**.  
+> ⏱️ **Tổng:** Setup 30' + Lab ~130' (phòng thủ ~90' · tấn công ~30' · nộp ~10').
+> 👤 **Cá nhân** · Làm **đúng thứ tự** Checkpoint 1 → 5.
+> 📂 **Không tự tạo file JSON trong** `outputs/` **bằng tay.** Folder và file kết quả được **sinh khi bạn chạy lệnh**.
 > ▶️ Mọi lệnh lab chạy từ **gốc repo** (nơi có `README.md`): `python src/main.py --part N` — **không** cần `cd src`.
 
 ### Hai vai (đọc trước khi làm)
@@ -36,8 +36,8 @@ Day-11-.../
 └── src/                  ← chỗ bạn viết code
 ```
 
-`outputs/` **không** nằm trong `.gitignore` — khi nộp bạn **commit các file JSON** do lệnh lab sinh ra.  
-Khi chạy lệnh, code sẽ **tự tạo folder** (nếu cần) và ghi file JSON vào `outputs/`.  
+`outputs/` **không** nằm trong `.gitignore` — khi nộp bạn **commit các file JSON** do lệnh lab sinh ra.
+Khi chạy lệnh, code sẽ **tự tạo folder** (nếu cần) và ghi file JSON vào `outputs/`.
 **Không viết report tay.** Checkpoint 5 chạy `scripts/grade.py` sẽ **tự sinh** `outputs/grade_report.json` + `outputs/lab_report.md`.
 
 ### Sau khi làm xong toàn bộ lab, `outputs/` phải có
@@ -97,18 +97,18 @@ CP1 Setup → CP2 Viết bộ lọc → CP3 Ghép pipeline + sinh results.json
 
 ### Mục tiêu
 
-Máy chạy được Python lab + có key **OpenRouter** (Blue) và key **OpenAI hoặc Gemini** (Red).
+Máy chạy được Python lab + có key **Liquid AI** (Blue) và key **OpenAI hoặc Gemini** (Red).
 
 ### Việc cần làm (từng bước)
 
-1. Fork / clone starter về GitHub cá nhân, rồi **đổi tên repo** theo quy ước:  
-   `K4-L3-DAY11-<HoVaTen>-<MSSV>-Guardrails-HITL-Responsible-AI`  
-   (chi tiết + ví dụ trong [`SUBMISSION.md`](SUBMISSION.md)).  
+1. Fork / clone starter về GitHub cá nhân, rồi **đổi tên repo** theo quy ước:
+   `K4-L3-DAY11-<HoVaTen>-<MSSV>-Guardrails-HITL-Responsible-AI`
+   (chi tiết + ví dụ trong [`SUBMISSION.md`](SUBMISSION.md)).
 2. Clone repo (đã đổi tên) về máy; mở terminal tại **thư mục gốc** repo.
 3. Tạo & kích hoạt virtualenv, cài dependency.
 4. Copy `.env.example` → `.env`:
-  - **Blue (cố định):** `OPENROUTER_API_KEY` — model khóa `liquid/lfm-3-1.7b:free`
-  - **Red (chọn một):** `RED_TEAM_PROVIDER=openai` + `OPENAI_API_KEY` (`gpt-4o-mini`)  
+  - **Blue (cố định):** `LIQUID_API_KEY` — Liquid AI model `lfm3-1.7b`
+  - **Red (chọn một):** `RED_TEAM_PROVIDER=openai` + `OPENAI_API_KEY` (`gpt-4o-mini`)
     **hoặc** `RED_TEAM_PROVIDER=gemini` + `GOOGLE_API_KEY` (`gemini-3.5-flash`)
 5. (Tuỳ chọn) Model khó khi săn bonus: `OPENAI_MODEL=gpt-5.6-luna` hoặc `GEMINI_MODEL=gemini-3.8-flash` — **không** đổi tên agent.
 
@@ -119,7 +119,7 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 # Nếu bị chặn: Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 Copy-Item .env.example .env
-# Điền OPENROUTER_API_KEY + (OPENAI_API_KEY hoặc GOOGLE_API_KEY)
+# Điền LIQUID_API_KEY + (OPENAI_API_KEY hoặc GOOGLE_API_KEY)
 python -m pip install -U pip
 pip install -r requirements.txt
 ```
@@ -130,7 +130,7 @@ pip install -r requirements.txt
 python3 -m venv .venv
 source .venv/bin/activate
 cp .env.example .env
-# Điền OPENROUTER_API_KEY + (OPENAI_API_KEY hoặc GOOGLE_API_KEY)
+# Điền LIQUID_API_KEY + (OPENAI_API_KEY hoặc GOOGLE_API_KEY)
 python -m pip install -U pip
 pip install -r requirements.txt
 ```
@@ -139,9 +139,9 @@ pip install -r requirements.txt
 
 ### Cần hiểu gì?
 
-- Lab chạy **local**.  
-  **Blue** luôn dùng OpenRouter `liquid/lfm-3-1.7b:free`.  
-  **Red** + **Red Advance** cùng provider: `gpt-4o-mini` hoặc `gemini-3.5-flash`.  
+- Lab chạy **local**.
+  **Blue** luôn dùng Liquid AI `lfm3-1.7b`.
+  **Red** + **Red Advance** cùng provider: `gpt-4o-mini` hoặc `gemini-3.5-flash`.
   Bonus: chọn **một** — leak **Red** tối đa +5 **hoặc** leak **Red Advance** tối đa +10 (**không** cộng cả hai).
 - **Red** cố ý “mềm”; **Red Advance** vẫn cứng: regex **+ NVIDIA NeMo Guardrails** (thư viện `nemoguardrails`, đã có trong `requirements.txt` — thiếu thì Red Advance báo lỗi, không tự lùi về regex).
 - Mỗi lần mở terminal mới phải kích hoạt lại venv (`Activate.ps1` trên Windows, `source .venv/bin/activate` trên macOS/Linux).
@@ -164,7 +164,7 @@ pip install -r requirements.txt
 
 ```bash
 # Blue SDK (Windows / macOS / Linux — sau khi đã Activate venv)
-python -c "import openai; print('OpenAI SDK (OpenRouter Blue + OpenAI Red) sẵn sàng')"
+python -c "import openai; print('OpenAI SDK (Liquid AI Blue + OpenAI Red) sẵn sàng')"
 # Nếu Red/Red Advance = gemini, kiểm tra thêm:
 # python -c "import google.adk; print('Gemini/ADK sẵn sàng')"
 # Red Advance bắt buộc NeMo Guardrails:
@@ -314,7 +314,7 @@ Làm trong `src/assignment/`. Tái dùng filter đã viết ở CP2 — **không
   - `record_input(...)`: lưu user, nội dung hỏi, thời điểm bắt đầu.
   - `record_output(...)`: lưu câu trả lời / có bị chặn không / lớp nào chặn / latency.
   - `export_json(...)`: ghi toàn bộ log ra đĩa.
-- **Output file:** `outputs/audit_log.json`  
+- **Output file:** `outputs/audit_log.json`
 (đường dẫn đầy đủ: `<repo>/outputs/audit_log.json`)
 
 
@@ -388,10 +388,10 @@ Mỗi phần tử query tối thiểu:
 { "input": "...", "blocked": true, "layer": "input_guardrail", "response_preview": "..." }
 ```
 
-- `input`, `blocked` = bắt buộc  
+- `input`, `blocked` = bắt buộc
 - `layer`, `response_preview` = nên có
 
-Schema máy chấm: `[schemas/results.schema.json](schemas/results.schema.json)`  
+Schema máy chấm: `[schemas/results.schema.json](schemas/results.schema.json)`
 Mẫu đầy đủ: `[SUBMISSION.md](SUBMISSION.md)`.
 
 Đầu file JSON còn cần:
@@ -435,7 +435,7 @@ ls outputs/*.json
 pytest tests/public/test_results_contract.py -q
 ```
 
-> **Pass Signal:**  
+> **Pass Signal:**
 >
 > 1. Thấy 3 file JSON trong `outputs/`
 > 2. `test_results_contract` xanh
@@ -463,7 +463,7 @@ data/protected/vinbank_secrets.json
 
 Các giá trị (`admin_password`, `api_key`, `db_host`) được load vào system prompt của mọi bot (xem `core.config.DEMO_SECRETS`).
 
-- **Red** (`create_red_agent_default`): cố ý mềm → **phải leak** ít nhất một giá trị trong file JSON này (điểm bắt buộc CP4; bonus B1 tối đa +5 nếu chọn B1).  
+- **Red** (`create_red_agent_default`): cố ý mềm → **phải leak** ít nhất một giá trị trong file JSON này (điểm bắt buộc CP4; bonus B1 tối đa +5 nếu chọn B1).
 - **Blue** (plugin CP2–3 của bạn) và **Red Advance** (`create_red_agent_advance`): phải chặn / redact / refuse (bonus B2 tối đa +10 nếu chọn B2 — **không** cộng với B1).
 
 **Red Advance chặn bằng gì?** 4 lớp, theo thứ tự:
@@ -560,10 +560,10 @@ Get-ChildItem .\outputs\*attack*.json
 ls outputs/*attack*.json
 ```
 
-> Cần `OPENROUTER_API_KEY` (Blue) + key Red (`OPENAI_API_KEY` hoặc `GOOGLE_API_KEY`) — lệnh tấn công gọi LLM.  
+> Cần `LIQUID_API_KEY` (Blue) + key Red (`OPENAI_API_KEY` hoặc `GOOGLE_API_KEY`) — lệnh tấn công gọi LLM.
 > **Pass Signal:** 3 file `*attack*` xuất hiện; mở `attack_results.json` thấy `unsafe_attacks` (= default) và `guards_attacks` (= advance).
 
-Demo nhanh (optional): từ gốc repo  
+Demo nhanh (optional): từ gốc repo
 `python scripts/demo_attack_guards.py`
 
 ---
@@ -576,7 +576,7 @@ Demo nhanh (optional): từ gốc repo
 
 ### Mục tiêu
 
-Xác nhận `outputs/` đủ file, tự validate, push + nộp link.  
+Xác nhận `outputs/` đủ file, tự validate, push + nộp link.
 **Không viết report tay** — chạy `scripts/grade.py` sẽ **tự sinh** `grade_report.json` + `lab_report.md`.
 
 ### Việc cần làm
@@ -638,7 +638,7 @@ Lệnh grade **tự sinh** (không viết tay):
 
 #### Việc 3 — Nộp
 
-Push lên fork GitHub → nộp **link repo** theo `[SUBMISSION.md](SUBMISSION.md)`.  
+Push lên fork GitHub → nộp **link repo** theo `[SUBMISSION.md](SUBMISSION.md)`.
 **Không** commit `.env`.
 
 ### Checklist Pass

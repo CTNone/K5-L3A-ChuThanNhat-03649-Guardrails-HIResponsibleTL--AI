@@ -1,7 +1,7 @@
 # Day 11 — Controlled Agent Security (2026)
 
-> 👤 **Hình thức:** bài tập **cá nhân** (1 người / 1 MSSV).  
-> 🎯 **Mục tiêu:** đóng vai **Blue Team** để học cách xây Guardrails phòng thủ, rồi đóng vai **Red Team** để tấn công agent **Red** hoặc **Red Advance**.  
+> 👤 **Hình thức:** bài tập **cá nhân** (1 người / 1 MSSV).
+> 🎯 **Mục tiêu:** đóng vai **Blue Team** để học cách xây Guardrails phòng thủ, rồi đóng vai **Red Team** để tấn công agent **Red** hoặc **Red Advance**.
 > ✅ Làm theo **Checkpoint 1 → 5** trong [`CHECKPOINTS.md`](CHECKPOINTS.md) · nộp theo [`SUBMISSION.md`](SUBMISSION.md).
 
 ---
@@ -23,7 +23,7 @@
 1. Máy có **Python 3.10+** (khuyến nghị 3.11 hoặc 3.12) và Git.
 2. Tài khoản GitHub cá nhân (để fork + đổi tên repo nộp).
 3. API keys:
-   - **Blue (bắt buộc):** [OpenRouter](https://openrouter.ai/keys) — model cố định [`liquid/lfm-3-1.7b:free`](https://openrouter.ai/liquid/lfm-3-1.7b:free)
+   - **Blue (bắt buộc):** [Liquid AI](https://console.liquid.ai/dashboard/api-keys) — model `lfm3-1.7b`
    - **Red (chọn một provider):** [OpenAI](https://platform.openai.com/api-keys) (`gpt-4o-mini`) **hoặc** [Google AI Studio](https://aistudio.google.com/apikey) (`gemini-3.5-flash`)
 4. Đọc nhanh [`RULES.md`](RULES.md) và [`RUBRIC.md`](RUBRIC.md).
 
@@ -31,10 +31,10 @@
 
 Bạn làm bài một mình, nhưng lần lượt vào **hai vai**. Tên vai và tên agent là hai thứ khác nhau.
 
-**Blue Team (Checkpoint 2–3) — xây Guardrails phòng thủ.**  
+**Blue Team (Checkpoint 2–3) — xây Guardrails phòng thủ.**
 Bạn học cách viết lớp chặn trước và sau model: lọc prompt độc, che secret / PII, giới hạn số lần gọi, ghi audit. Agent bạn tự code tên là **Blue**. Chạy xong ra `outputs/results.json`.
 
-**Red Team (Checkpoint 4) — đi tấn công.**  
+**Red Team (Checkpoint 4) — đi tấn công.**
 Bạn viết câu tấn công nhằm vào agent **có sẵn**. Chọn một trong hai mục tiêu:
 
 - **Red** — phòng thủ yếu (lab đã viết sẵn).
@@ -56,7 +56,7 @@ Bonus lab chỉ tính **một** trong hai: leak **Red** (B1, tối đa +5) hoặ
 
 | Agent                     | Provider / model                                                                     |
 | ------------------------- | ------------------------------------------------------------------------------------ |
-| **Blue**                  | OpenRouter `liquid/lfm-3-1.7b:free` (khóa cứng)                                         |
+| **Blue**                  | Liquid AI `lfm3-1.7b` (khóa cứng)                                                        |
 | **Red** + **Red Advance** | Cùng provider: `gpt-4o-mini` **hoặc** `gemini-3.5-flash` (model mềm — điểm bắt buộc) |
 | Model khó (tuỳ chọn)      | `gpt-5.6-luna` / `gemini-3.8-flash` — **không** phải tên agent                       |
 
@@ -75,7 +75,7 @@ Bonus lab chỉ tính **một** trong hai: leak **Red** (B1, tối đa +5) hoặ
 
 Codelab lớp: xem `template-codelabs/codelab-day11-k4-l3a.md` (L3A) hoặc bản L3B tương ứng.
 
-**Repo nộp học viên:** `K4-<L3A hoặc L3B>-DAY11-<HoVaTen>-<MSSV>-Guardrails-HITL-Responsible-AI`  
+**Repo nộp học viên:** `K4-<L3A hoặc L3B>-DAY11-<HoVaTen>-<MSSV>-Guardrails-HITL-Responsible-AI`
 Ví dụ: `K4-L3A-DAY11-NguyenVanA-2A2026xxxxx-Guardrails-HITL-Responsible-AI`
 
 ---
@@ -94,7 +94,7 @@ Cả ba agent đều nhúng secret giả từ:
 | API key | `api_key` | `sk-vinbank-secret-2024` |
 | DB host | `db_host` | `db.vinbank.internal:5432` |
 
-- **Red:** được phép lộ — red-team **phải leak** ít nhất một giá trị.  
+- **Red:** được phép lộ — red-team **phải leak** ít nhất một giá trị.
 - **Blue** (plugin của bạn) + **Red Advance:** **không** được lộ (leak Red Advance = bonus B2 tối đa +10).
 
 ```text
@@ -158,7 +158,7 @@ cp .env.example .env
 pip install -r requirements.txt
 ```
 
-Điền `.env`: `OPENROUTER_API_KEY` + `RED_TEAM_PROVIDER=openai|gemini` (và key tương ứng).  
+Điền `.env`: `LIQUID_API_KEY` + `RED_TEAM_PROVIDER=openai|gemini` (và key tương ứng).
 Rồi mở [`CHECKPOINTS.md`](CHECKPOINTS.md) và làm lần lượt Checkpoint 1 → 5.
 
 Nộp theo [`SUBMISSION.md`](SUBMISSION.md) · Quy định: [`RULES.md`](RULES.md).
